@@ -1,0 +1,213 @@
+/* ==========================================================================
+   SCENE 1: THE ANCIENT CAVE DOOR STYLES
+   ========================================================================== */
+
+#scene-1 {
+  background: #000;
+  overflow: hidden;
+  perspective: 1000px;
+}
+
+/* Cave Entrance Background Container & Zoom Animation */
+.cave-camera-viewport {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+.cave-bg-image {
+  position: absolute;
+  width: 115%;
+  height: 115%;
+  object-fit: cover;
+  object-position: center 40%;
+  filter: brightness(0.65) contrast(1.2) saturate(0.9);
+  transition: transform 12s cubic-bezier(0.1, 0.8, 0.2, 1), filter 3s ease;
+  will-change: transform, filter;
+  transform: scale(1.25) translateZ(0);
+}
+
+/* Camera Zoom Phase 1 */
+#scene-1.zooming .cave-bg-image {
+  transform: scale(1.0) translateZ(0);
+  filter: brightness(0.8) contrast(1.15) saturate(1.0);
+}
+
+/* Door Opening Camera Zoom Phase 2 */
+#scene-1.opening .cave-bg-image {
+  transform: scale(2.8) translateZ(200px);
+  filter: brightness(1.6) contrast(1.3) saturate(1.2);
+  transition: transform 2.2s cubic-bezier(0.7, 0, 0.3, 1), filter 2s ease;
+}
+
+/* Door Inscription & Warning Overlay */
+.door-content-overlay {
+  position: relative;
+  z-index: 15;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 40px 20px;
+  max-width: 900px;
+  opacity: 0;
+  transform: translateY(30px) scale(0.95);
+  transition: opacity 2s ease 1s, transform 2s ease 1s;
+}
+
+#scene-1.zooming .door-content-overlay {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+#scene-1.opening .door-content-overlay {
+  opacity: 0;
+  transform: scale(1.5);
+  transition: opacity 0.5s ease, transform 0.8s ease;
+}
+
+/* Ancient Carved Warning Message */
+.ancient-warning-box {
+  background: rgba(8, 10, 16, 0.65);
+  border-top: 2px solid rgba(255, 215, 0, 0.4);
+  border-bottom: 2px solid rgba(255, 215, 0, 0.4);
+  padding: 30px 45px;
+  border-radius: 4px;
+  backdrop-filter: blur(6px);
+  box-shadow: 0 0 50px rgba(0, 0, 0, 0.9), inset 0 0 30px rgba(0, 0, 0, 0.8);
+  position: relative;
+  margin-bottom: 40px;
+}
+
+.ancient-warning-box::before, .ancient-warning-box::after {
+  content: '❖';
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--gold-primary);
+  font-size: 1.4rem;
+  text-shadow: 0 0 10px var(--gold-glow);
+}
+
+.ancient-warning-box::before { left: 15px; }
+.ancient-warning-box::after { right: 15px; }
+
+.warning-text {
+  font-family: var(--font-title);
+  font-size: clamp(1.4rem, 3.5vw, 2.8rem);
+  font-weight: 900;
+  letter-spacing: 4px;
+  line-height: 1.4;
+  color: #fff4d0;
+  text-transform: uppercase;
+  text-shadow: 
+    0 0 10px rgba(255, 215, 0, 0.9),
+    0 0 25px rgba(255, 140, 0, 0.7),
+    0 0 40px rgba(255, 42, 75, 0.5),
+    2px 2px 4px rgba(0, 0, 0, 0.9);
+  animation: warningRunePulse 4s infinite alternate ease-in-out;
+}
+
+@keyframes warningRunePulse {
+  0% {
+    text-shadow: 
+      0 0 10px rgba(255, 215, 0, 0.8),
+      0 0 20px rgba(255, 140, 0, 0.5),
+      0 0 35px rgba(255, 42, 75, 0.3);
+  }
+  100% {
+    text-shadow: 
+      0 0 15px rgba(255, 235, 120, 1),
+      0 0 35px rgba(255, 160, 20, 0.9),
+      0 0 55px rgba(255, 42, 75, 0.8),
+      0 0 80px rgba(255, 0, 0, 0.5);
+  }
+}
+
+/* Enter Button (Invitation) */
+.enter-invitation-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.enter-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 18px 50px;
+  font-family: var(--font-body);
+  font-size: clamp(1.1rem, 2vw, 1.5rem);
+  font-weight: 700;
+  letter-spacing: 5px;
+  color: var(--gold-glow);
+  text-transform: uppercase;
+  background: linear-gradient(180deg, rgba(30, 22, 10, 0.9) 0%, rgba(12, 8, 4, 0.95) 100%);
+  border: 2px solid var(--gold-primary);
+  border-radius: 2px;
+  box-shadow: 
+    0 0 20px rgba(212, 175, 55, 0.3),
+    inset 0 0 15px rgba(255, 215, 0, 0.2),
+    0 10px 30px rgba(0, 0, 0, 0.8);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  overflow: hidden;
+}
+
+.enter-btn::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(255, 223, 115, 0.3) 0%, transparent 60%);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+
+.enter-btn:hover {
+  color: #ffffff;
+  transform: translateY(-4px) scale(1.05);
+  border-color: #ffffff;
+  box-shadow: 
+    0 0 35px rgba(255, 215, 0, 0.8),
+    0 0 60px rgba(255, 140, 0, 0.6),
+    inset 0 0 25px rgba(255, 235, 150, 0.5);
+  letter-spacing: 6px;
+}
+
+.enter-btn:hover::before {
+  opacity: 1;
+}
+
+.enter-btn:active {
+  transform: translateY(1px) scale(0.98);
+}
+
+/* Subtle glowing pulse ring under button */
+.enter-btn-glow-ring {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 4px;
+  box-shadow: 0 0 25px var(--gold-primary);
+  animation: ringPulse 2.5s infinite;
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+@keyframes ringPulse {
+  0% { transform: scale(1); opacity: 0.6; }
+  50% { transform: scale(1.1); opacity: 0.1; }
+  100% { transform: scale(1.25); opacity: 0; }
+}

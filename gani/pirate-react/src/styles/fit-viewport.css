@@ -1,0 +1,1201 @@
+/* ==========================================================================
+   FIT-VIEWPORT SYSTEM: ZERO SCROLLING ON ALL SCREENS & VIEWPORTS
+   Ensures all 9 scenes, puzzles, cards, and HUDs fit 100% within the viewport
+   ========================================================================== */
+
+html, body, #root, .game-container {
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+  max-height: 100vh;
+  max-height: 100dvh;
+  overflow: hidden !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  box-sizing: border-box;
+}
+
+/* Global Scene Viewport Containment */
+.scene {
+  width: 100vw !important;
+  height: 100vh !important;
+  height: 100dvh !important;
+  max-height: 100vh !important;
+  max-height: 100dvh !important;
+  overflow: hidden !important;
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+  align-items: center !important;
+  padding: 10px 16px !important;
+  box-sizing: border-box !important;
+}
+
+/* Compact Top Floating HUDs (Never push page content) */
+.audio-control-hud {
+  top: 10px !important;
+  left: 14px !important;
+  padding: 4px 12px !important;
+  font-size: 0.75rem !important;
+}
+
+.audio-btn {
+  font-size: 0.75rem !important;
+  gap: 6px !important;
+}
+
+.audio-icon {
+  width: 16px !important;
+  height: 16px !important;
+}
+
+.hud-container {
+  top: 10px !important;
+  right: 14px !important;
+  gap: 8px !important;
+}
+
+/* Round Quick Navigation HUD */
+.round-nav-hud {
+  position: fixed !important;
+  top: 10px !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  z-index: 100 !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  background: rgba(8, 12, 22, 0.9) !important;
+  border: 1px solid rgba(255, 215, 0, 0.45) !important;
+  border-radius: 20px !important;
+  padding: 3px 8px !important;
+  backdrop-filter: blur(8px) !important;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.8), 0 0 10px rgba(255, 215, 0, 0.15) !important;
+}
+
+.round-nav-pill {
+  background: transparent !important;
+  border: 1px solid transparent !important;
+  color: rgba(255, 255, 255, 0.65) !important;
+  font-family: var(--font-title) !important;
+  font-size: 0.72rem !important;
+  letter-spacing: 1px !important;
+  padding: 3px 10px !important;
+  border-radius: 12px !important;
+  cursor: pointer !important;
+  transition: all 0.2s ease !important;
+}
+
+.round-nav-pill:hover {
+  color: #ffd700 !important;
+  background: rgba(255, 215, 0, 0.15) !important;
+  border-color: rgba(255, 215, 0, 0.4) !important;
+}
+
+.round-nav-pill.active {
+  color: #00f0ff !important;
+  background: rgba(0, 240, 255, 0.22) !important;
+  border-color: #00f0ff !important;
+  font-weight: 700 !important;
+  box-shadow: 0 0 10px rgba(0, 240, 255, 0.45) !important;
+}
+
+.warning-card, .lives-card {
+  padding: 4px 12px !important;
+  font-size: 0.78rem !important;
+  gap: 6px !important;
+}
+
+.heart-icon {
+  width: 16px !important;
+  height: 16px !important;
+}
+
+.lives-text, .warning-text {
+  font-size: 0.8rem !important;
+  letter-spacing: 1px !important;
+}
+
+/* ==========================================================================
+   SCENE 1: ENTRANCE
+   ========================================================================== */
+#scene-1 {
+  overflow: hidden !important;
+}
+
+#scene-1 .ancient-warning-box .warning-text {
+  font-size: clamp(1.2rem, 2.5vw, 2.2rem) !important;
+}
+
+#scene-1 .enter-btn {
+  padding: 12px 32px !important;
+  font-size: clamp(1rem, 1.8vw, 1.25rem) !important;
+}
+
+/* ==========================================================================
+   SCENE 2: LEVEL 1 PAGE (3 DOORS)
+   ========================================================================== */
+#scene-2 {
+  overflow: hidden !important;
+  padding: 12px 16px !important;
+  justify-content: center !important;
+}
+
+.level1-content-wrapper {
+  width: 100% !important;
+  height: 100% !important;
+  max-height: calc(100vh - 20px) !important;
+  max-width: 1050px !important;
+  margin: 0 auto !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: space-evenly !important;
+  align-items: center !important;
+  gap: 8px !important;
+  padding: 15px 10px 5px !important;
+  box-sizing: border-box !important;
+}
+
+.level1-header {
+  margin: 0 !important;
+}
+
+.level1-title {
+  font-size: clamp(1.6rem, 3.2vw, 2.3rem) !important;
+  letter-spacing: 4px !important;
+  margin: 0 !important;
+}
+
+.level1-title::after {
+  margin: 3px auto 0 !important;
+  height: 2px !important;
+}
+
+.typewriter-card {
+  max-width: 820px !important;
+  min-height: auto !important;
+  padding: 8px 20px !important;
+  margin: 0 !important;
+}
+
+.typewriter-text {
+  font-size: clamp(0.82rem, 1.15vw, 0.98rem) !important;
+  line-height: 1.35 !important;
+}
+
+.doors-container {
+  display: grid !important;
+  grid-template-columns: repeat(3, 1fr) !important;
+  gap: 16px !important;
+  width: 100% !important;
+  max-width: 960px !important;
+  margin: 2px auto 0 !important;
+}
+
+.door-card {
+  height: clamp(180px, 42vh, 310px) !important;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.8) !important;
+}
+
+.door-info {
+  padding: 8px 12px !important;
+  gap: 2px !important;
+}
+
+.door-tag {
+  font-size: 0.72rem !important;
+  letter-spacing: 1px !important;
+}
+
+.door-inscription {
+  font-size: clamp(0.72rem, 1vw, 0.82rem) !important;
+  line-height: 1.25 !important;
+  margin: 2px 0 !important;
+}
+
+.door-action-hint {
+  font-size: 0.72rem !important;
+}
+
+.lock-badge {
+  font-size: 0.75rem !important;
+  padding: 4px 10px !important;
+}
+
+.next-btn-container {
+  margin-top: 4px !important;
+}
+
+.next-btn {
+  padding: 6px 26px !important;
+  font-size: 0.88rem !important;
+  letter-spacing: 1.5px !important;
+}
+
+/* ==========================================================================
+   SCENE 3: DOOR 1, DOOR 2 & DOOR 3 QUESTION CHAMBER
+   ========================================================================== */
+#scene-3 {
+  overflow: hidden !important;
+  padding: 10px 14px !important;
+  justify-content: center !important;
+}
+
+.trial-wrapper {
+  width: 100% !important;
+  height: 100% !important;
+  max-height: calc(100vh - 20px) !important;
+  max-width: 1050px !important;
+  margin: 0 auto !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: space-evenly !important;
+  gap: 6px !important;
+  box-sizing: border-box !important;
+}
+
+.level1-question-tabs-nav {
+  padding: 2px 6px !important;
+  gap: 6px !important;
+  margin: 0 !important;
+}
+
+.q-tab-btn {
+  padding: 4px 12px !important;
+  font-size: 0.78rem !important;
+}
+
+.trial-header-bar {
+  padding: 4px 12px !important;
+  font-size: 0.82rem !important;
+  margin: 0 !important;
+}
+
+.trial-header-title {
+  font-size: 0.85rem !important;
+  letter-spacing: 1.5px !important;
+}
+
+.door1-layout-grid {
+  display: grid !important;
+  grid-template-columns: 1.15fr 0.85fr !important;
+  gap: 14px !important;
+  width: 100% !important;
+  max-height: calc(100vh - 95px) !important;
+  align-items: stretch !important;
+}
+
+.question-panel {
+  padding: 10px 14px !important;
+  gap: 6px !important;
+  max-height: calc(100vh - 100px) !important;
+  font-size: 0.85rem !important;
+  overflow-y: auto !important;
+}
+
+.puzzle-title-tag {
+  font-size: 0.72rem !important;
+}
+
+.puzzle-main-title {
+  font-size: clamp(1.05rem, 1.5vw, 1.3rem) !important;
+  margin: 0 !important;
+}
+
+.puzzle-body-text {
+  font-size: 0.82rem !important;
+  line-height: 1.4 !important;
+}
+
+.puzzle-list {
+  margin-left: 14px !important;
+  gap: 2px !important;
+}
+
+.puzzle-task-box {
+  padding: 6px 10px !important;
+  font-size: 0.82rem !important;
+  margin-top: 4px !important;
+}
+
+.door1-keypad-panel {
+  padding: 8px 14px !important;
+  gap: 6px !important;
+  max-height: calc(100vh - 100px) !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: space-evenly !important;
+  align-items: center !important;
+}
+
+.keypad-header-label {
+  font-size: 0.72rem !important;
+  letter-spacing: 1.5px !important;
+}
+
+.answer-box-container {
+  width: 100% !important;
+  max-width: 220px !important;
+}
+
+.answer-box {
+  height: 34px !important;
+  font-size: 1.1rem !important;
+  padding: 0 10px !important;
+}
+
+.keypad-grid, .num-keypad-grid {
+  gap: 4px !important;
+  width: 100% !important;
+  max-width: 210px !important;
+}
+
+.keypad-btn {
+  height: 30px !important;
+  font-size: 0.95rem !important;
+}
+
+.submit-btn {
+  padding: 6px 18px !important;
+  font-size: 0.88rem !important;
+}
+
+.feedback-box {
+  padding: 3px 8px !important;
+  font-size: 0.78rem !important;
+  min-height: 22px !important;
+}
+
+.action-buttons-group {
+  gap: 6px !important;
+}
+
+.proceed-btn, .back-btn {
+  padding: 4px 12px !important;
+  font-size: 0.76rem !important;
+}
+
+/* Door 3 Specific Layout */
+.door3-code-layout-grid {
+  display: grid !important;
+  grid-template-columns: 1fr 1fr !important;
+  gap: 14px !important;
+  width: 100% !important;
+  max-height: calc(100vh - 95px) !important;
+  align-items: stretch !important;
+}
+
+.door3-code-editor-panel {
+  padding: 10px 14px !important;
+  gap: 6px !important;
+  max-height: calc(100vh - 100px) !important;
+}
+
+.door3-input-label {
+  font-size: 0.75rem !important;
+}
+
+.door3-single-input {
+  height: 28px !important;
+  font-size: 0.82rem !important;
+  padding: 2px 8px !important;
+}
+
+.code-editor-textarea {
+  height: clamp(75px, 16vh, 120px) !important;
+  font-size: 0.8rem !important;
+  padding: 6px !important;
+}
+
+/* ==========================================================================
+   SCENE 4: TREASURE MAP SCREEN
+   ========================================================================== */
+#scene-4 {
+  overflow: hidden !important;
+  padding: 12px !important;
+  justify-content: center !important;
+}
+
+.map-screen-wrapper {
+  width: 100% !important;
+  height: 100% !important;
+  max-height: calc(100vh - 20px) !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: space-evenly !important;
+  align-items: center !important;
+  gap: 8px !important;
+}
+
+.map-screen-title {
+  font-size: clamp(1.05rem, 1.8vw, 1.35rem) !important;
+  margin: 0 !important;
+}
+
+.framed-map-container {
+  max-height: clamp(200px, 48vh, 320px) !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+}
+
+.unlocked-treasure-map {
+  max-height: clamp(180px, 45vh, 300px) !important;
+  width: auto !important;
+  object-fit: contain !important;
+}
+
+.map-next-btn-container {
+  margin-top: 2px !important;
+}
+
+/* ==========================================================================
+   SCENE 5: LEVEL 2 LANDING
+   ========================================================================== */
+#scene-5 {
+  overflow: hidden !important;
+  padding: 12px !important;
+  justify-content: center !important;
+}
+
+.level2-content-wrapper {
+  width: 100% !important;
+  height: 100% !important;
+  max-height: calc(100vh - 20px) !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: space-evenly !important;
+  align-items: center !important;
+  gap: 8px !important;
+}
+
+.level2-typewriter-card {
+  padding: 6px 16px !important;
+  min-height: auto !important;
+  font-size: 0.88rem !important;
+}
+
+.challenge-cards-container {
+  gap: 14px !important;
+  max-width: 720px !important;
+  margin: 0 !important;
+}
+
+.challenge-card {
+  padding: 6px !important;
+  gap: 4px !important;
+}
+
+.card-image-wrapper {
+  height: clamp(110px, 26vh, 180px) !important;
+}
+
+.card-title {
+  font-size: 0.95rem !important;
+  margin: 2px 0 0 !important;
+}
+
+.level2-next-container {
+  margin-top: 2px !important;
+}
+
+/* ==========================================================================
+   SCENE 6 & SCENE 7: PUZZLES (SUDOKU & JIGSAW SUDOKU)
+   ========================================================================== */
+#scene-6, #scene-7 {
+  overflow: hidden !important;
+  padding: 10px !important;
+  justify-content: center !important;
+}
+
+.puzzle-content-wrapper {
+  width: 100% !important;
+  height: 100% !important;
+  max-height: calc(100vh - 20px) !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: space-evenly !important;
+  align-items: center !important;
+  gap: 5px !important;
+}
+
+.puzzle-header {
+  gap: 3px !important;
+  margin: 0 !important;
+}
+
+.puzzle-title {
+  font-size: clamp(1.1rem, 1.8vw, 1.35rem) !important;
+  margin: 0 !important;
+}
+
+.puzzle-instructions {
+  padding: 2px 10px !important;
+  font-size: 0.78rem !important;
+  margin: 0 !important;
+}
+
+.suguru-rules-box {
+  padding: 4px 10px !important;
+  font-size: 0.75rem !important;
+  margin: 0 !important;
+  max-width: 480px !important;
+}
+
+.rules-heading {
+  font-size: 0.72rem !important;
+  margin-bottom: 2px !important;
+}
+
+.puzzle-grid-card {
+  padding: 8px 12px !important;
+  gap: 6px !important;
+  max-width: min(440px, 94vw) !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+.sudoku-grid-9x9 {
+  width: min(360px, 42vh) !important;
+  height: min(360px, 42vh) !important;
+  max-width: 100% !important;
+  aspect-ratio: 1 / 1 !important;
+  display: grid !important;
+  grid-template-columns: repeat(9, 1fr) !important;
+  grid-template-rows: repeat(9, 1fr) !important;
+  box-sizing: border-box !important;
+}
+
+.sudoku-grid-9x9 .grid-cell-item {
+  width: 100% !important;
+  height: 100% !important;
+  min-width: 0 !important;
+  min-height: 0 !important;
+  aspect-ratio: 1 / 1 !important;
+  font-size: clamp(0.85rem, 1.9vh, 1.2rem) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  box-sizing: border-box !important;
+}
+
+.sudoku-grid-9x9 .grid-cell-item .cell-input {
+  width: 100% !important;
+  height: 100% !important;
+  min-width: 0 !important;
+  min-height: 0 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  font-size: inherit !important;
+  text-align: center !important;
+  background: transparent !important;
+  border: none !important;
+  outline: none !important;
+  box-sizing: border-box !important;
+}
+
+.jigsaw-grid-4x4 {
+  width: min(260px, 34vh) !important;
+  height: min(260px, 34vh) !important;
+  max-width: 100% !important;
+  aspect-ratio: 1 / 1 !important;
+  display: grid !important;
+  grid-template-columns: repeat(4, 1fr) !important;
+  grid-template-rows: repeat(4, 1fr) !important;
+  box-sizing: border-box !important;
+}
+
+.jigsaw-grid-4x4 .grid-cell-item {
+  width: 100% !important;
+  height: 100% !important;
+  min-width: 0 !important;
+  min-height: 0 !important;
+  aspect-ratio: 1 / 1 !important;
+  font-size: clamp(1.1rem, 2.8vh, 1.6rem) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  box-sizing: border-box !important;
+}
+
+.jigsaw-grid-4x4 .grid-cell-item .cell-input {
+  width: 100% !important;
+  height: 100% !important;
+  min-width: 0 !important;
+  min-height: 0 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  font-size: inherit !important;
+  text-align: center !important;
+  background: transparent !important;
+  border: none !important;
+  outline: none !important;
+  box-sizing: border-box !important;
+}
+
+.puzzle-action-row {
+  gap: 8px !important;
+}
+
+.puzzle-action-row button {
+  padding: 4px 16px !important;
+  font-size: 0.8rem !important;
+}
+
+.puzzle-action-row .proceed-btn,
+.proceed-suguru-container .proceed-btn,
+.final-victory-container .proceed-btn {
+  padding: 8px 18px !important;
+  font-size: 0.85rem !important;
+  width: 100% !important;
+  max-width: 320px !important;
+}
+
+/* ==========================================================================
+   SCENE 8: LEVEL 2 COMPLETION SCREEN
+   ========================================================================== */
+#scene-8 {
+  overflow: hidden !important;
+  padding: 8px !important;
+  justify-content: center !important;
+}
+
+.level3-map-wrapper {
+  width: 100% !important;
+  height: 100% !important;
+  max-height: calc(100vh - 16px) !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: space-evenly !important;
+  align-items: center !important;
+  gap: 5px !important;
+  padding: 4px !important;
+}
+
+.completion-card-content {
+  padding: 8px 14px !important;
+  max-width: 560px !important;
+  box-shadow: 0 0 25px rgba(255, 51, 68, 0.5) !important;
+}
+
+.skull-warning-icon {
+  font-size: 1.6rem !important;
+  margin-bottom: 0 !important;
+}
+
+.completion-danger-title {
+  font-size: 1rem !important;
+  margin-bottom: 2px !important;
+}
+
+.completion-danger-text {
+  font-size: 0.8rem !important;
+  padding: 4px 8px !important;
+  line-height: 1.3 !important;
+}
+
+.level3-unlocked-title {
+  font-size: 1.1rem !important;
+  margin: 2px 0 !important;
+}
+
+.level3-framed-container {
+  height: clamp(120px, 25vh, 175px) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.standing-pirate-wrapper {
+  height: 100% !important;
+}
+
+.standing-pirate-img {
+  max-height: clamp(120px, 25vh, 175px) !important;
+  width: auto !important;
+  object-fit: contain !important;
+}
+
+/* ==========================================================================
+   SCENE 9: LEVEL 3 INTRO & JUMBLED JAVA CHALLENGE
+   ========================================================================== */
+#scene-9 {
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  height: 100dvh !important;
+  max-height: 100vh !important;
+  overflow: hidden !important;
+  padding: 6px 10px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+  align-items: center !important;
+  box-sizing: border-box !important;
+  background: #000 !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  z-index: 10 !important;
+  transition: opacity 0.3s ease, visibility 0.3s ease !important;
+}
+
+#scene-9.active {
+  opacity: 1 !important;
+  visibility: visible !important;
+  z-index: 25 !important;
+  display: flex !important;
+}
+
+.level3-intro-screen-wrapper {
+  position: relative !important;
+  z-index: 15 !important;
+  width: 100% !important;
+  max-width: 820px !important;
+  height: auto !important;
+  max-height: calc(100vh - 40px) !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  gap: 16px !important;
+  animation: fadeInScale 0.4s ease forwards !important;
+  padding: 10px !important;
+  box-sizing: border-box !important;
+}
+
+.level3-intro-header .level3-title {
+  font-size: clamp(1.8rem, 3.2vw, 2.4rem) !important;
+  margin: 0 !important;
+  color: #ff3344 !important;
+  text-shadow: 0 0 20px rgba(255, 51, 68, 0.7) !important;
+  text-align: center !important;
+}
+
+.level3-typewriter-card {
+  width: 100% !important;
+  max-width: 780px !important;
+  height: clamp(170px, 30vh, 220px) !important;
+  min-height: clamp(170px, 30vh, 220px) !important;
+  max-height: clamp(170px, 30vh, 220px) !important;
+  padding: 16px 22px !important;
+  font-size: 0.92rem !important;
+  line-height: 1.5 !important;
+  overflow-y: auto !important;
+  box-sizing: border-box !important;
+  background: rgba(8, 11, 20, 0.95) !important;
+  border: 1px solid rgba(255, 51, 68, 0.4) !important;
+  border-radius: 8px !important;
+  box-shadow: 0 0 25px rgba(255, 51, 68, 0.3) !important;
+  cursor: pointer !important;
+}
+
+.level3-intro-btn-row {
+  display: flex !important;
+  align-items: center !important;
+  gap: 14px !important;
+}
+
+.skip-intro-btn {
+  background: rgba(255, 255, 255, 0.1) !important;
+  border: 1px solid rgba(255, 215, 0, 0.5) !important;
+  color: #ffd700 !important;
+  padding: 8px 18px !important;
+  font-family: var(--font-title) !important;
+  font-size: 0.85rem !important;
+  border-radius: 6px !important;
+  letter-spacing: 1px !important;
+  cursor: pointer !important;
+  transition: all 0.2s ease !important;
+}
+
+.skip-intro-btn:hover {
+  background: rgba(255, 215, 0, 0.25) !important;
+  border-color: #ffd700 !important;
+}
+
+.level3-puzzle-fullscreen-wrapper {
+  position: relative !important;
+  z-index: 15 !important;
+  width: 100% !important;
+  height: 100% !important;
+  max-width: 98vw !important;
+  max-height: calc(100vh - 20px) !important;
+  display: flex !important;
+  flex-direction: column !important;
+  animation: fadeInScale 0.3s ease forwards !important;
+}
+
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.level3-puzzle-card.full-screen-code-layout {
+  position: relative !important;
+  z-index: 15 !important;
+  width: 100% !important;
+  max-width: 98vw !important;
+  height: calc(100vh - 30px) !important;
+  max-height: calc(100vh - 30px) !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 6px !important;
+  margin: 0 auto !important;
+  padding: 0 !important;
+  box-sizing: border-box !important;
+}
+
+/* TOP TOOLBAR */
+.level3-top-toolbar {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  background: rgba(12, 15, 26, 0.95) !important;
+  border: 1px solid rgba(255, 51, 68, 0.4) !important;
+  border-radius: 8px !important;
+  padding: 5px 12px !important;
+  gap: 12px !important;
+  flex-shrink: 0 !important;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.7) !important;
+}
+
+.toolbar-left-group {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 2px !important;
+}
+
+.level3-compact-title {
+  font-family: var(--font-title) !important;
+  font-size: 0.9rem !important;
+  letter-spacing: 1.5px !important;
+  color: #ff3344 !important;
+  text-shadow: 0 0 10px rgba(255, 51, 68, 0.6) !important;
+  font-weight: 700 !important;
+}
+
+.toolbar-hint-badge {
+  font-size: 0.72rem !important;
+  color: rgba(255, 215, 0, 0.75) !important;
+  letter-spacing: 0.5px !important;
+}
+
+.holding-slot-box {
+  min-height: 28px !important;
+  padding: 2px 10px !important;
+  font-size: 0.76rem !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  background: rgba(18, 24, 38, 0.95) !important;
+  border: 1px dashed rgba(255, 215, 0, 0.4) !important;
+  border-radius: 6px !important;
+  cursor: pointer !important;
+  transition: all 0.2s ease !important;
+  max-width: 320px !important;
+}
+
+.holding-slot-box:hover {
+  border-color: #ffd700 !important;
+  background: rgba(28, 38, 60, 0.95) !important;
+}
+
+.holding-slot-box.has-held {
+  border-color: #00e5ff !important;
+  background: rgba(0, 229, 255, 0.12) !important;
+}
+
+.holding-icon {
+  font-size: 0.9rem !important;
+}
+
+.holding-slot-placeholder {
+  font-family: var(--font-title) !important;
+  font-size: 0.72rem !important;
+  letter-spacing: 1px !important;
+  color: rgba(255, 255, 255, 0.4) !important;
+}
+
+.held-item-preview {
+  display: flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace !important;
+  font-size: 0.74rem !important;
+  color: #00f0ff !important;
+  overflow: hidden !important;
+}
+
+.held-badge {
+  color: #ffd700 !important;
+  font-weight: 700 !important;
+  font-size: 0.68rem !important;
+}
+
+.held-code-snippet {
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  max-width: 150px !important;
+}
+
+.held-return-hint {
+  color: #ff5252 !important;
+  font-size: 0.68rem !important;
+  cursor: pointer !important;
+}
+
+.toolbar-actions-group {
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  flex-shrink: 0 !important;
+}
+
+.shuffle-btn {
+  background: rgba(255, 255, 255, 0.08) !important;
+  border: 1px solid rgba(255, 215, 0, 0.4) !important;
+  color: #ffd700 !important;
+  padding: 4px 10px !important;
+  font-size: 0.74rem !important;
+  border-radius: 4px !important;
+  font-family: var(--font-title) !important;
+  letter-spacing: 1px !important;
+  cursor: pointer !important;
+  transition: all 0.2s ease !important;
+}
+
+.shuffle-btn:hover {
+  background: rgba(255, 215, 0, 0.2) !important;
+  border-color: #ffd700 !important;
+}
+
+.check-code-btn {
+  background: linear-gradient(135deg, #e60000, #990000) !important;
+  border: 1px solid #ff6666 !important;
+  color: #ffffff !important;
+  padding: 5px 16px !important;
+  font-size: 0.85rem !important;
+  letter-spacing: 1.5px !important;
+  font-weight: 700 !important;
+  border-radius: 4px !important;
+  box-shadow: 0 0 15px rgba(230, 0, 0, 0.5) !important;
+}
+
+.compact-feedback {
+  padding: 3px 12px !important;
+  font-size: 0.78rem !important;
+  margin: 0 !important;
+  border-radius: 4px !important;
+}
+
+/* 2-COLUMN SIDE-BY-SIDE GRID BOARD */
+.level3-code-grid-board {
+  display: grid !important;
+  grid-template-columns: 1fr 1fr !important;
+  gap: 10px !important;
+  flex: 1 !important;
+  min-height: 0 !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+.code-column-card {
+  display: flex !important;
+  flex-direction: column !important;
+  background: rgba(8, 11, 20, 0.95) !important;
+  border: 1px solid rgba(255, 51, 68, 0.35) !important;
+  border-radius: 8px !important;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.8), inset 0 0 15px rgba(255, 51, 68, 0.05) !important;
+  padding: 5px 8px !important;
+  min-height: 0 !important;
+  height: 100% !important;
+  box-sizing: border-box !important;
+}
+
+.code-column-header {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  padding: 2px 6px 4px !important;
+  font-family: var(--font-title) !important;
+  font-size: 0.74rem !important;
+  letter-spacing: 1.5px !important;
+  color: #ff5252 !important;
+  border-bottom: 1px solid rgba(255, 51, 68, 0.25) !important;
+  margin-bottom: 3px !important;
+  flex-shrink: 0 !important;
+}
+
+.col-count-tag {
+  color: rgba(255, 215, 0, 0.65) !important;
+  font-size: 0.68rem !important;
+}
+
+.code-column-list {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 2px !important;
+  flex: 1 !important;
+  min-height: 0 !important;
+  overflow-y: auto !important;
+  justify-content: flex-start !important;
+  padding-right: 2px !important;
+}
+
+.code-column-list::-webkit-scrollbar {
+  width: 5px;
+}
+
+.code-column-list::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.25);
+  border-radius: 4px;
+}
+
+.code-column-list::-webkit-scrollbar-thumb {
+  background: rgba(255, 51, 68, 0.45);
+  border-radius: 4px;
+}
+
+.code-column-list::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 51, 68, 0.8);
+}
+
+/* CODE LINE ITEM */
+.code-line-item {
+  display: flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  background: rgba(14, 18, 28, 0.95) !important;
+  border: 1px solid rgba(255, 215, 0, 0.18) !important;
+  border-radius: 4px !important;
+  padding: 1px 6px !important;
+  height: clamp(20px, 2.7vh, 25px) !important;
+  min-height: 19px !important;
+  box-sizing: border-box !important;
+  cursor: pointer !important;
+  user-select: none !important;
+  transition: background 0.15s ease, border-color 0.15s ease, transform 0.15s ease !important;
+}
+
+.code-line-item:hover {
+  border-color: #ffd700 !important;
+  background: rgba(26, 34, 52, 0.98) !important;
+  box-shadow: 0 0 8px rgba(255, 215, 0, 0.2) !important;
+}
+
+.code-line-item.selected {
+  border-color: #00e5ff !important;
+  background: rgba(0, 229, 255, 0.18) !important;
+  box-shadow: 0 0 12px rgba(0, 229, 255, 0.6) !important;
+}
+
+.code-line-item.correct-spot {
+  border-left: 3px solid #10b981 !important;
+}
+
+.code-line-handle {
+  font-size: 0.75rem !important;
+  color: rgba(255, 215, 0, 0.5) !important;
+  cursor: grab !important;
+  flex-shrink: 0 !important;
+}
+
+.code-line-num {
+  font-family: 'Consolas', monospace !important;
+  font-size: 0.72rem !important;
+  color: #ffd700 !important;
+  font-weight: 700 !important;
+  min-width: 26px !important;
+  text-align: right !important;
+  padding-right: 4px !important;
+  flex-shrink: 0 !important;
+}
+
+.code-line-content {
+  font-family: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', 'Consolas', monospace !important;
+  text-transform: none !important;
+  font-size: clamp(0.72rem, 1.15vh, 0.85rem) !important;
+  white-space: pre !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  flex: 1 !important;
+  min-width: 0 !important;
+  letter-spacing: 0 !important;
+  line-height: 1.2 !important;
+  color: #e2e8f0 !important;
+}
+
+.java-code-str {
+  font-family: inherit !important;
+  color: #e2e8f0 !important;
+  white-space: pre !important;
+}
+
+.java-blank-line {
+  font-family: inherit !important;
+  color: rgba(255, 255, 255, 0.28) !important;
+  font-style: italic !important;
+}
+
+.code-line-controls {
+  display: flex !important;
+  align-items: center !important;
+  gap: 2px !important;
+  flex-shrink: 0 !important;
+  margin-left: auto !important;
+}
+
+.code-line-controls .mini-btn {
+  padding: 1px 4px !important;
+  font-size: 0.65rem !important;
+  height: 18px !important;
+  min-width: 18px !important;
+  line-height: 1 !important;
+  background: rgba(255, 255, 255, 0.08) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  color: #ffffff !important;
+  border-radius: 3px !important;
+  cursor: pointer !important;
+}
+
+.code-line-controls .mini-btn:hover {
+  background: rgba(255, 215, 0, 0.3) !important;
+  border-color: #ffd700 !important;
+  color: #ffd700 !important;
+}
+
+.treasure-content-card {
+  padding: 16px 20px !important;
+  max-width: 580px !important;
+}
+
+.glowing-chest-emoji {
+  font-size: 3rem !important;
+}
+
+.treasure-main-title {
+  font-size: 1.4rem !important;
+  margin: 8px 0 !important;
+}
+
+.treasure-subtitle {
+  font-size: 0.9rem !important;
+  line-height: 1.4 !important;
+}
+
+.restart-btn {
+  padding: 8px 24px !important;
+  font-size: 0.95rem !important;
+  margin-top: 14px !important;
+}

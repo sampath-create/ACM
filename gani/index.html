@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pirate Adventure - The Forbidden Cave</title>
+  
+  <!-- Primary Meta Tags for SEO & Presentation -->
+  <meta name="description" content="An immersive cinematic anime pirate adventure game frontend. Step through ancient doors, face mysterious trials, and survive Level 1.">
+  <meta name="theme-color" content="#05070a">
+  
+  <!-- CSS Stylesheets -->
+  <link rel="stylesheet" href="src/css/main.css">
+  <link rel="stylesheet" href="src/css/scene1.css">
+  <link rel="stylesheet" href="src/css/scene2.css">
+  <link rel="stylesheet" href="src/css/placeholder.css">
+
+  <!-- MathJax for LaTeX mathematical formatting support -->
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      },
+      svg: {
+        fontCache: 'global'
+      }
+    };
+  </script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+
+  <!-- Particle Canvas for Cave Embers & Floating Dust -->
+  <canvas id="particle-canvas"></canvas>
+  
+  <!-- Atmospheric Vignette & Moving Fog -->
+  <div class="vignette-overlay"></div>
+  <div class="fog-layer"></div>
+
+  <!-- Screen Flash / Dark Transition Fade Overlay -->
+  <div id="flash-overlay"></div>
+
+  <!-- Top-Left Sound Controller HUD -->
+  <div class="audio-control-hud">
+    <button id="toggle-audio-btn" class="audio-btn" title="Toggle Sound Ambience">
+      <svg class="audio-icon" viewBox="0 0 24 24">
+        <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+      </svg>
+      <span id="audio-status-text">SOUND: ON</span>
+    </button>
+  </div>
+
+  <!-- Top-Right Lives & Warning Counter HUD -->
+  <div class="hud-container">
+    <div class="warning-card" id="warning-hud" title="Tab Switch Violation Counter">
+      <span class="warning-icon">⚠️</span>
+      <span id="warning-hud-text" class="warning-text">WARNINGS 0/3</span>
+    </div>
+    <div class="lives-card" id="lives-hud">
+      <svg class="heart-icon" viewBox="0 0 24 24">
+        <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+      </svg>
+      <span class="lives-text">LIVES 5/5</span>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       SCENE 1: THE ANCIENT CAVE DOOR ENTRANCE
+       ========================================================================== -->
+  <section id="scene-1" class="scene active">
+    <div class="cave-camera-viewport">
+      <img src="assets/images/cave_entrance.jpg" alt="Ancient Mysterious Cave Door" class="cave-bg-image" id="cave-entrance-img">
+    </div>
+
+    <div class="door-content-overlay">
+      <div class="ancient-warning-box">
+        <h1 class="warning-text">BEYOND THIS GATE, EVEN COURAGE TREMBLES.</h1>
+      </div>
+
+      <div class="enter-invitation-container">
+        <button id="enter-btn" class="enter-btn clickable">
+          <span class="enter-btn-glow-ring"></span>
+          ENTER IF YOU DARE
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       SCENE 2: LEVEL 1 PAGE
+       ========================================================================== -->
+  <section id="scene-2" class="scene">
+    <img src="assets/images/cave_level1_bg.jpg" alt="Ancient Cave Interior" class="level1-bg-image">
+
+    <div class="level1-content-wrapper">
+      
+      <!-- Level 1 Title -->
+      <header class="level1-header">
+        <h1 class="level1-title">LEVEL 1</h1>
+      </header>
+
+      <!-- Typewriter Introduction Box -->
+      <div class="typewriter-card">
+        <p class="typewriter-text" id="typewriter-text"></p>
+      </div>
+
+      <!-- Three Ancient Doors Grid -->
+      <div class="doors-container" id="doors-container">
+        
+        <!-- Door 1 (Crimson Stone) -->
+        <article class="door-card clickable" data-door="door1" role="button" tabindex="0" aria-label="Door 1 - If You Dare Touch Me">
+          <img src="assets/images/door1_crimson.jpg" alt="Ancient Crimson Stone Door" class="door-bg">
+          <div class="door-overlay"></div>
+          <div class="door-info">
+            <span class="door-tag">DOOR 1</span>
+            <p class="door-inscription">"IF YOU DARE, TOUCH ME."</p>
+            <span class="door-action-hint">✦ OPEN DOOR ✦</span>
+          </div>
+        </article>
+
+        <!-- Door 2 (Wooden Pirate - Locked until Door 1 is solved) -->
+        <article class="door-card clickable locked" data-door="door2" role="button" tabindex="0" aria-label="Door 2 - Step Closer Face The Unknown">
+          <img src="assets/images/door2_wooden.jpg" alt="Old Wooden Pirate Door" class="door-bg">
+          <div class="door-overlay"></div>
+          <div class="door-info">
+            <span class="door-tag">DOOR 2</span>
+            <p class="door-inscription">"STEP CLOSER. FACE THE UNKNOWN."</p>
+            <span class="door-action-hint">✦ OPEN DOOR ✦</span>
+          </div>
+          <div class="lock-badge">🔒 LOCKED</div>
+        </article>
+
+        <!-- Door 3 (Azure Gate - Locked) -->
+        <article class="door-card clickable locked" data-door="door3" role="button" tabindex="0" aria-label="Door 3 - Only The Fearless Shall Pass">
+          <img src="assets/images/door3_azure.jpg" alt="Massive Azure Stone Gate" class="door-bg">
+          <div class="door-overlay"></div>
+          <div class="door-info">
+            <span class="door-tag">DOOR 3</span>
+            <p class="door-inscription">"ONLY THE FEARLESS SHALL PASS."</p>
+            <span class="door-action-hint">✦ OPEN DOOR ✦</span>
+          </div>
+          <div class="lock-badge">🔒 LOCKED</div>
+        </article>
+
+      </div>
+
+      <!-- NEXT Button Below Doors -->
+      <div class="next-btn-container" id="next-btn-container">
+        <button id="next-btn" class="next-btn clickable" aria-label="Open Next Question">
+          <span>NEXT</span>
+          <span class="next-btn-arrow">➔</span>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       SCENE 3: DOOR CHALLENGE / QUESTION SCREEN CONTAINER
+       ========================================================================== -->
+  <section id="scene-3" class="scene" data-active-door="door1">
+    <img src="assets/images/door1_crimson.jpg" alt="Door Chamber Background" class="chamber-bg" id="chamber-bg-image">
+    
+    <!-- Dynamic Trial Content Wrapper -->
+    <div id="trial-container" style="width: 100%;"></div>
+  </section>
+
+  <!-- ==========================================================================
+       SCENE 4: TREASURE MAP UNLOCKED SCREEN
+       ========================================================================== -->
+  <section id="scene-4" class="scene">
+    <img src="assets/images/cave_level1_bg.jpg" alt="Cave Background" class="chamber-bg">
+
+    <div class="map-screen-wrapper">
+      <!-- Heading Above Map -->
+      <h1 class="map-screen-title">Congratulations, Pirate! The Treasure Map Is Unlocked!</h1>
+
+      <!-- Decorative Framed Map Container -->
+      <div class="framed-map-container">
+        <div class="gold-frame-border">
+          <img src="assets/images/treasure_map.jpg" alt="Ancient Pirate Treasure Map" class="unlocked-treasure-map">
+        </div>
+      </div>
+
+      <!-- NEXT Button Directly Below Framed Map -->
+      <div class="map-next-btn-container">
+        <button id="map-next-btn" class="next-btn clickable" aria-label="Proceed to Level 2">
+          <span>NEXT</span>
+          <span class="next-btn-arrow">➔</span>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       SCENE 5: LEVEL 2 LANDING (TYPEWRITER & CHALLENGE CARDS)
+       ========================================================================== -->
+  <section id="scene-5" class="scene">
+    <img src="assets/images/cave_level1_bg.jpg" alt="Level 2 Background" class="chamber-bg">
+
+    <div class="level2-content-wrapper">
+      <!-- Level 2 Title -->
+      <header class="level1-header">
+        <h1 class="level1-title">LEVEL 2</h1>
+      </header>
+
+      <!-- Typewriter Sentence Card -->
+      <div class="typewriter-card level2-typewriter-card">
+        <p class="typewriter-text" id="level2-typewriter-text"></p>
+      </div>
+
+      <!-- Challenge Cards Container (Side-by-side on desktop) -->
+      <div class="challenge-cards-container" id="challenge-cards-container">
+        
+        <!-- CARD 1: BLOODY BRIDGE -->
+        <article class="challenge-card" id="card-bloody-bridge">
+          <div class="card-image-wrapper">
+            <img src="assets/images/bloody_bridge.jpg" alt="Bloody Bridge" class="card-img">
+            <div class="card-overlay"></div>
+          </div>
+          <h2 class="card-title">BLOODY BRIDGE</h2>
+        </article>
+
+        <!-- CARD 2: RAGED RIVER -->
+        <article class="challenge-card" id="card-raged-river">
+          <div class="card-image-wrapper">
+            <img src="assets/images/raged_river.jpg" alt="Raged River" class="card-img">
+            <div class="card-overlay"></div>
+          </div>
+          <h2 class="card-title">RAGED RIVER</h2>
+        </article>
+
+      </div>
+
+      <!-- NEXT Button under the two challenge cards -->
+      <div class="level2-next-container" id="level2-next-container">
+        <button id="level2-next-btn" class="next-btn clickable" aria-label="Proceed to Sudoku Challenge">
+          <span>NEXT</span>
+          <span class="next-btn-arrow">➔</span>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       SCENE 6: SUDOKU CHALLENGE — 9×9 GRID
+       ========================================================================== -->
+  <section id="scene-6" class="scene">
+    <img src="assets/images/cave_level1_bg.jpg" alt="Sudoku Chamber Background" class="chamber-bg">
+
+    <div class="puzzle-content-wrapper">
+      <header class="puzzle-header">
+        <h1 class="puzzle-title">THE CURSED SUDOKU</h1>
+        <p class="puzzle-instructions">
+          Fill every row, column, and 3×3 subgrid with numbers 1–9 without repeating.
+        </p>
+      </header>
+
+      <div class="puzzle-grid-card">
+        <div id="sudoku-grid-container" class="sudoku-grid-9x9"></div>
+
+        <div id="sudoku-feedback-box" class="feedback-box"></div>
+
+        <div class="puzzle-action-row">
+          <button id="sudoku-clear-btn" class="back-btn clickable">CLEAR</button>
+          <button id="sudoku-submit-btn" class="submit-btn clickable">SUBMIT</button>
+        </div>
+
+        <div class="proceed-suguru-container">
+          <button id="proceed-suguru-btn" class="proceed-btn clickable">PROCEED TO NEXT QUESTION ➔</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       SCENE 7: 4×4 JIGSAW SUDOKU CHALLENGE
+       ========================================================================== -->
+  <section id="scene-7" class="scene">
+    <img src="assets/images/cave_level1_bg.jpg" alt="Sudoku Chamber Background" class="chamber-bg">
+
+    <div class="puzzle-content-wrapper">
+      <header class="puzzle-header">
+        <h1 class="puzzle-title">4×4 JIGSAW SUDOKU</h1>
+        <div class="suguru-rules-box">
+          <p class="rules-heading"><strong>JIGSAW SUDOKU RULES:</strong></p>
+          <ol class="rules-list">
+            <li>Every row must contain numbers 1, 2, 3, and 4 exactly once.</li>
+            <li>Every column must contain numbers 1, 2, 3, and 4 exactly once.</li>
+            <li>Every irregular jigsaw region must contain numbers 1, 2, 3, and 4 exactly once.</li>
+          </ol>
+        </div>
+      </header>
+
+      <div class="puzzle-grid-card">
+        <div id="suguru-grid-container" class="jigsaw-grid-4x4"></div>
+
+        <div id="suguru-feedback-box" class="feedback-box"></div>
+
+        <div class="puzzle-action-row">
+          <button id="suguru-clear-btn" class="back-btn clickable">CLEAR</button>
+          <button id="suguru-submit-btn" class="submit-btn clickable">CHECK PUZZLE</button>
+        </div>
+
+        <div class="final-victory-container">
+          <button id="final-victory-btn" class="proceed-btn clickable">CLAIM THE MAP 🗺️</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       SCENE 8: LEVEL 2 COMPLETION SCREEN (MESSAGE + MAP + NEXT BUTTON ON SAME SCREEN)
+       ========================================================================== -->
+  <section id="scene-8" class="scene">
+    <img src="assets/images/cave_level1_bg.jpg" alt="Cave Background" class="chamber-bg">
+
+    <div class="map-screen-wrapper level3-map-wrapper" style="gap: 16px; max-width: 780px; padding: 20px 10px;">
+      
+      <!-- 1. LEVEL 2 COMPLETION DANGEROUS MESSAGE (APPEARS FIRST AT TOP) -->
+      <div class="completion-card-content" style="max-width: 680px; width: 100%; margin: 0 auto; box-shadow: 0 0 35px rgba(255, 51, 68, 0.65); padding: 20px 24px;">
+        <div class="skull-warning-icon" style="font-size: 3rem; margin-bottom: 6px;">☠️</div>
+        <h2 class="completion-danger-title" style="font-size: 1.4rem; margin-bottom: 10px;">THE FINAL BOUNDARY OF SAFETY</h2>
+        <p class="completion-danger-text" style="font-size: 1.05rem; padding: 12px 16px; margin-bottom: 0;">
+          "YOU FOOLISHLY CHOSE THIS PATH! You have crossed the final boundary of safety. I am sending you straight into the depths of HELL. There is no turning back now!"
+        </p>
+      </div>
+
+      <!-- 2. GAME MAP TOGETHER WITH MESSAGE (APPEARS BELOW MESSAGE) -->
+      <h1 class="map-screen-title level3-unlocked-title" style="margin-top: 6px; margin-bottom: 4px; font-size: 1.8rem;">LEVEL 3 UNLOCKED</h1>
+
+      <div class="framed-map-container level3-framed-container">
+        <div class="gold-frame-border">
+          <img src="assets/images/treasure_map.jpg" alt="Ancient Pirate Treasure Map" class="unlocked-treasure-map">
+        </div>
+        
+        <!-- Standing Pirate Guarding the Map -->
+        <div class="standing-pirate-wrapper">
+          <img src="assets/images/standing_pirate.png" alt="Standing Pirate Guard" class="standing-pirate-img">
+        </div>
+      </div>
+
+      <!-- 3. NEXT BUTTON POSITIONED DIRECTLY BELOW THE MAP -->
+      <div class="map-next-btn-container" style="margin-top: 6px;">
+        <button id="level3-map-next-btn" class="next-btn clickable" aria-label="Proceed to Level 3 Intro">
+          <span>NEXT</span>
+          <span class="next-btn-arrow">➔</span>
+        </button>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       SCENE 9: LEVEL 3 INTRODUCTION & GAMEPLAY SCREEN
+       ========================================================================== -->
+  <section id="scene-9" class="scene">
+    <img src="assets/images/cave_level1_bg.jpg" alt="Level 3 Background" class="chamber-bg">
+
+    <div class="level1-content-wrapper level3-intro-wrapper">
+      <!-- Level 3 Title -->
+      <header class="level1-header">
+        <h1 class="level1-title level3-title">LEVEL 3</h1>
+      </header>
+
+      <!-- Typewriter Message Card -->
+      <div class="typewriter-card level3-typewriter-card">
+        <p class="typewriter-text" id="level3-typewriter-text"></p>
+      </div>
+
+      <!-- NEXT Button Below Message -->
+      <div class="level2-next-container level3-next-container" id="level3-next-container">
+        <button id="level3-intro-next-btn" class="next-btn clickable" aria-label="Begin Level 3 Nightmare">
+          <span>NEXT</span>
+          <span class="next-btn-arrow">➔</span>
+        </button>
+      </div>
+
+      <!-- Level 3 Interactive Gameplay Puzzle Card (Jumbled Java Code Challenge) -->
+      <div id="level3-puzzle-card" class="level3-puzzle-card" style="display: none; width: 100%; max-width: 900px;">
+        <div class="puzzle-content-wrapper" style="padding: 0; max-width: 100%;">
+          <header class="puzzle-header">
+            <h1 class="puzzle-title" style="color: #ff3344; text-shadow: 0 0 16px rgba(255, 51, 68, 0.8);">JUMBLED JAVA CODE CHALLENGE</h1>
+            <p class="puzzle-instructions">
+              The ancient pirate software has been corrupted! Reconstruct the exact Java source code lines in their true order to unlock the pirate treasure.
+            </p>
+          </header>
+
+          <div class="puzzle-grid-card" style="background: rgba(10, 12, 22, 0.95); border-color: #ff3344; padding: 20px;">
+            
+            <!-- HOLDING SLOT ("DROP CODE LINE HERE") -->
+            <div class="holding-slot-container">
+              <div class="holding-slot-header">
+                <span class="slot-badge">HOLDING AREA</span>
+                <span class="slot-hint">(Holds max 1 line temporarily)</span>
+              </div>
+              <div id="holding-slot-box" class="holding-slot-box" data-empty="true">
+                <span class="holding-slot-placeholder">DROP CODE LINE HERE</span>
+              </div>
+            </div>
+
+            <!-- CODE REORDERING LIST CONTAINER -->
+            <div class="jumbled-code-container">
+              <div class="jumbled-code-header">
+                <span>RECONSTRUCT THE JAVA SOURCE CODE</span>
+                <span id="code-line-counter" class="line-counter-badge">19 / 19 LINES</span>
+              </div>
+              
+              <div id="jumbled-lines-list" class="jumbled-lines-list">
+                <!-- Code line blocks dynamically rendered here -->
+              </div>
+            </div>
+
+            <!-- CHECK CODE BUTTON -->
+            <div class="check-code-action-wrapper">
+              <button id="check-code-btn" class="submit-btn clickable" style="background: linear-gradient(135deg, #e60000, #990000); border-color: #ff6666; width: 100%; max-width: 420px; font-size: 1.25rem; letter-spacing: 2px;">CHECK CODE</button>
+            </div>
+
+            <!-- FEEDBACK DISPLAY BOX -->
+            <div id="level3-code-feedback-box" class="feedback-box" style="margin-top: 12px; width: 100%;"></div>
+
+            <!-- CLAIM THE TREASURE BUTTON (Revealed only when 100% correct) -->
+            <div id="claim-treasure-container" class="claim-treasure-container" style="display: none;">
+              <button id="claim-treasure-btn" class="proceed-btn clickable" style="background: linear-gradient(135deg, #ffd700, #b8860b) !important; color: #000 !important; font-weight: 900 !important; font-size: 1.4rem !important; border-color: #ffffff !important; box-shadow: 0 0 35px rgba(255, 215, 0, 0.9) !important; padding: 16px 36px !important;">
+                <span>👑 CLAIM THE TREASURE 👑</span>
+              </button>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- TREASURE UNLOCKED FINAL SCREEN -->
+      <div id="treasure-screen" class="treasure-screen" style="display: none; width: 100%; max-width: 800px; margin-top: 20px;">
+        <div class="treasure-content-card">
+          <div class="treasure-icon-wrapper">
+            <span class="glowing-chest-emoji">💎👑🏴‍☠️</span>
+          </div>
+          <h1 class="treasure-main-title">THE PIRATE TREASURE IS YOURS!</h1>
+          <p class="treasure-subtitle">
+            "You have conquered all 3 levels of the Forbidden Cave! You solved the Rational Pirates, mastered the Cursed Sudoku and Suguru, and restored the ancient Cursed Java Code!"
+          </p>
+          <div class="treasure-badge-box">
+            <span class="gold-trophy-badge">🏆 LEGENDARY PIRATE CAPTAIN 🏆</span>
+          </div>
+
+          <div id="victory-stats-box" style="margin: 20px 0; background: rgba(0,0,0,0.6); padding: 14px; border-radius: 8px; border: 1px solid rgba(255,215,0,0.4); display: flex; justify-content: center; gap: 20px; align-items: center;">
+            <span style="color: #ffd700; font-weight: bold;">TIME: <span id="victory-time-display" style="color: #00ffcc;">57:24</span></span>
+            <span style="color: #ffd700; font-weight: bold;">SCORE: <span id="victory-score-display" style="color: #ffd700;">80</span></span>
+          </div>
+
+          <div style="margin-top: 16px;">
+            <a id="victory-google-form-btn" href="https://docs.google.com/forms/d/e/1FAIpQLSdaJMwpRA70KYBSXz-iNlo4TzbpRen17s69Vzon-60zVg_c8A/viewform?usp=pp_url&entry.637509370=57:24&entry.1974378786=80" target="_blank" rel="noopener noreferrer" class="proceed-btn" style="display: block; text-decoration: none; text-align: center; background: linear-gradient(135deg, #ffd700, #b8860b); color: #000; font-weight: 900; padding: 16px 28px; border-radius: 8px; font-size: 1.15rem; box-shadow: 0 0 25px rgba(255,215,0,0.7);">
+              📜 SUBMIT VICTORY FORM ➔
+            </a>
+            <p style="font-size: 0.8rem; color: #e8d8b8; margin-top: 8px;">Time and score are prefilled in the form.</p>
+          </div>
+
+          <button id="restart-game-btn" class="restart-btn clickable" style="margin-top: 24px;">
+            <span>🔄 PLAY AGAIN</span>
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- JavaScript Modules -->
+  <script src="src/js/audio.js"></script>
+  <script src="src/js/particles.js"></script>
+  <script src="src/js/scene1.js"></script>
+  <script src="src/js/scene2.js"></script>
+  <script src="src/js/placeholder.js"></script>
+  <script src="src/js/level2.js"></script>
+  <script src="src/js/level3.js"></script>
+  <script src="src/js/anti-cheat.js"></script>
+  <script src="src/js/app.js"></script>
+</body>
+</html>
